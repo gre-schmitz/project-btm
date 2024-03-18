@@ -1,7 +1,6 @@
 matplotlib
 numpy
 pandas
-tensorflow
 tensorflow-datasets
 scikit-learn
 seaborn
