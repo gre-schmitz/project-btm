@@ -7,31 +7,12 @@ from xgboost import XGBRegressor
 from btm.ml_logic.data import load_data
 
 
-def pipe():
+def pipe(data_source: str):
     '''
     - Input will be our csv that has been turned into a DataFrame
     - Output will be a preprocessed X and y
     '''
-    data = load_data()
-
-    # What is the target?
-    Target = 'Final_GDP_Interp'
-
-    # What features will be dropped in the first place?
-    Drop = ['GDP Nowcast', 'Final_GDP_Interp', 'Quarter being forecasted',
-            'Advance Estimate From BEA', 'Publication Date of Advance Estimate',
-            'Days until advance estimate', 'Forecast Error', 'Data releases']
-
-    # DataFrame will have a lot of empty rows. Lets drop these.
-    # However, 2 rows of them sometimes are empty even when the rest is filled
-    # Rows where only these two are missing will not be dropped
-
-    data_dropped = data.dropna(axis=0, thresh=len(data.columns)-2)
-
-
-    # Defining our X and y
-    X_dropped = data_dropped.drop(columns=Drop)
-    y_dropped = data_dropped[Target]
+    X_dropped, y_dropped = load_data(data_source)
 
     # sklearn pipeline
     # first part of the pipeline will impute the few NAs and scale the data
