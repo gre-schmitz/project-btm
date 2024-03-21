@@ -22,5 +22,11 @@ tensorflow==2.10.0; sys_platform != 'darwin' # Windows & Ubuntu Intel chips
 xgboost
 statsmodels
 shap
+optuna
+
+# API
+fastapi==0.108.0
+pytz
+uvicorn
 
 # prevent bq 3+ db-dtypes package error when running training from bq
