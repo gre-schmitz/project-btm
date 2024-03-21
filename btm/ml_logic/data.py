@@ -8,7 +8,7 @@ def load_data():
     '''
     Loads the csv into a DataFrame
     '''
-    gdpnow = pd.read_csv('gdpnow_hf.csv', index_col='Dates', parse_dates=True)
+    gdpnow = pd.read_csv('train_set.csv', index_col='Dates', parse_dates=True)
     gdpnow.index = pd.to_datetime(gdpnow.index)
     return gdpnow
 
