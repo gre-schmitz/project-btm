@@ -9,3 +9,4 @@ BQ_DATASET = os.environ.get("BQ_DATASET")
 BQ_DATAFRAME_UNP = os.environ.get("BQ_DATAFRAME_UNP")
 WRITE_MODE = "WRITE_TRUNCATE" # write "WRITE_APPEND" if you want to append
 GAR_IMAGE = os.environ.get("GAR_IMAGE")
+GAR_MEMORY = os.environ.get("GAR_MEMORY")
