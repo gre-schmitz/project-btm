@@ -6,6 +6,7 @@ from sklearn.impute import KNNImputer
 from xgboost import XGBRegressor
 from btm.ml_logic.data import load_data
 import pickle
+import csv
 
 
 def pipe(data_source: str):
@@ -15,6 +16,20 @@ def pipe(data_source: str):
     '''
     X_dropped, y_dropped = load_data(data_source)
 
+    csv_file = 'best_params_GDP.csv'
+
+    # Initialize an empty dictionary to store the loaded data
+    loaded_params = {}
+
+    # Read the CSV file and populate the dictionary
+    with open(csv_file, mode='r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            param_name = row['Parameter']
+            param_value = row['Value']
+            loaded_params[param_name] = param_value
+
+    print(loaded_params)
     # sklearn pipeline
     # first part of the pipeline will impute the few NAs and scale the data
     preproc = Pipeline([
@@ -32,12 +47,7 @@ def pipe(data_source: str):
         ))
     ])
 
-    model_best =  XGBRegressor(
-        n_estimators=200,
-        max_depth = 9,
-        learning_rate = 0.275,
-        random_state=42,
-        reg_lambda = 0.01)
+    model_best =  XGBRegressor(**loaded_params)
 
     pipe_best = make_pipeline(preproc_selector, model_best)
 
