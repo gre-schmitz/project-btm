@@ -3,7 +3,7 @@ import pandas as pd
 from btm.params import *
 from google.cloud import bigquery
 
-def load_data(data_source: str, target):
+def load_data_predictions(data_source: str, target):
     '''
     Loads the csv into a DataFrame
     '''
@@ -44,13 +44,11 @@ def load_data(data_source: str, target):
     # Rows where only these two are missing will not be dropped
 
 
-    df_dropped = df.dropna(axis=0, thresh=len(df.columns)-2)
-
     # Defining our X and y
-    X_dropped = df_dropped.drop(columns=Drop)
-    y_dropped = df_dropped[target]
+    X = df.drop(columns=Drop)
+    y = df[target]
     #return X_dropped, y_dropped
-    return X_dropped, y_dropped
+    return X, y
 
 
 # def load_unprocecced_to_bq(

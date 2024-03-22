@@ -3,7 +3,7 @@ import numpy as np
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from btm.ml_logic.pipe_model import pipe
-from btm.ml_logic.data import load_data
+from btm.ml_logic.data_predictions import load_data_predictions
 from datetime import datetime
 import pickle
 import os
@@ -44,7 +44,7 @@ def root():
 def predict_gdp():
     #turning our prediction.csv into a DataFrame
     model = app.state.gdp
-    X_dropped, y_dropped = load_data('predict_set.csv','Final_GDP_Interp')
+    X_dropped, y_dropped = load_data_predictions('predict_set.csv','Final_GDP_Interp')
     y_pred = model.predict(X_dropped)
     dict_out = {}
     for i, y in enumerate(y_pred):
@@ -61,7 +61,7 @@ def predict_gdp():
 def predict_spx():
     #turning our prediction.csv into a DataFrame
     model = app.state.spx
-    X_dropped, y_dropped = load_data('predict_set.csv','SPX Index ')
+    X_dropped, y_dropped = load_data_predictions('predict_set.csv','SPX Index ')
     y_pred = model.predict(X_dropped)
     dict_out = {}
     for i, y in enumerate(y_pred):
