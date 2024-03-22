@@ -1,10 +1,10 @@
-FROM tensorflow/tensorflow:2.10.0
+FROM python:3.10.6-buster
 
 WORKDIR /prod
 
 COPY btm btm
-COPY requirements.txt requirements.txt
-COPY test_set.csv test_set.csv
+COPY requirements_prod.txt requirements.txt
+COPY predict_set.csv predict_set.csv
 COPY train_set.csv train_set.csv
 COPY setup.py setup.py
 # COPY setup.py setup.py
