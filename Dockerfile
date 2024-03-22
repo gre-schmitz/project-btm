@@ -4,7 +4,7 @@ WORKDIR /prod
 
 COPY btm btm
 COPY requirements_prod.txt requirements.txt
-COPY test_set.csv test_set.csv
+COPY predict_set.csv predict_set.csv
 COPY train_set.csv train_set.csv
 COPY setup.py setup.py
 # COPY setup.py setup.py

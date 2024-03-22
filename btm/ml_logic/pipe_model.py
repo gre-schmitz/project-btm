@@ -5,6 +5,7 @@ from sklearn.feature_selection import SelectPercentile, mutual_info_regression
 from sklearn.impute import KNNImputer
 from xgboost import XGBRegressor
 from btm.ml_logic.data import load_data
+import pickle
 
 
 def pipe(data_source: str):
@@ -41,5 +42,8 @@ def pipe(data_source: str):
     pipe_best = make_pipeline(preproc_selector, model_best)
 
     pipe_best.fit(X_dropped, y_dropped)
+
+    with open("pipeline.pkl", "wb") as file:
+        pickle.dump(pipe_best, file)
 
     return pipe_best
