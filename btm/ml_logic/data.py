@@ -22,7 +22,7 @@ def load_data(data_source: str):
     # However, 2 rows of them sometimes are empty even when the rest is filled
     # Rows where only these two are missing will not be dropped
 
-    df_dropped = df.dropna(axis=0, thresh=len(df.columns)-5)
+    df_dropped = df.dropna(axis=0, thresh=len(df.columns)-2)
 
 
     # Defining our X and y
