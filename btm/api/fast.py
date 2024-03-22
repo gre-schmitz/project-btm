@@ -6,9 +6,10 @@ from btm.ml_logic.pipe_model import pipe
 from btm.ml_logic.data import load_data
 from datetime import datetime
 import pickle
+import os
 
 app = FastAPI()
-app.state.model = pickle.load(open("pipeline.pkl","rb"))
+app.state.model = pickle.load(open(os.path.dirname(os.path.dirname(__file__))+'/ml_logic/pipeline.pkl',"rb"))
 
 # Allowing all middleware is optional,
 # but good practice for dev purposes

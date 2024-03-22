@@ -47,3 +47,6 @@ def pipe(data_source: str):
         pickle.dump(pipe_best, file)
 
     return pipe_best
+
+if __name__ == '__main__':
+    pipe('/Users/javierasua/code/tbow27/project-btm/gdpnow_hf.csv')
