@@ -43,13 +43,14 @@ def load_data(data_source: str, target):
     # However, 2 rows of them sometimes are empty even when the rest is filled
     # Rows where only these two are missing will not be dropped
 
-    df_dropped = df.dropna(axis=0, thresh=len(df.columns)-2)
 
+    #df_dropped = df.dropna(axis=0, thresh=len(df.columns)-2)
+    df_dropped = df.dropna(axis=0)
 
     # Defining our X and y
-    X_dropped = df_dropped.drop(columns=Drop)
-    y_dropped = df_dropped[target]
-
+    X_dropped = df.drop(columns=Drop)
+    y_dropped = df[target]
+    #return X_dropped, y_dropped
     return X_dropped, y_dropped
 
 
