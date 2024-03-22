@@ -14,49 +14,64 @@ def pipe(data_source: str):
     - Input will be our csv that has been turned into a DataFrame
     - Output will be a preprocessed X and y
     '''
-    X_dropped, y_dropped = load_data(data_source)
+    targets = ['Final_GDP_Interp', 'SPX Index ']
+    models_params = ['best_params_GDP.csv','best_params_SPX.csv']
 
-    csv_file = 'best_params_GDP.csv'
+    loaded_data = {}
+    for target in targets:
+        X, y = load_data(data_source, target)
+        loaded_data[target] = {
+            f"X_{target}": X,
+            f"y_{target}": y
+        }
+
 
     # Initialize an empty dictionary to store the loaded data
-    loaded_params = {}
+    all_loaded_params = {}
 
     # Read the CSV file and populate the dictionary
-    with open(csv_file, mode='r') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            param_name = row['Parameter']
-            param_value = row['Value']
-            loaded_params[param_name] = param_value
-
-    print(loaded_params)
+    for params,target in zip(models_params,targets):
+        loaded_params = {}
+        with open(params, mode='r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                param_name = row['Parameter']
+                if row['Value'].isdecimal():
+                    param_value = int(row['Value'])
+                else :
+                    param_value = float(row['Value'])
+                loaded_params[param_name] = param_value
+        all_loaded_params[target] = loaded_params
+    print(all_loaded_params)
     # sklearn pipeline
     # first part of the pipeline will impute the few NAs and scale the data
-    preproc = Pipeline([
-        ('imputer', KNNImputer(n_neighbors=5)),
-        ('scaler', RobustScaler())
-    ])
 
-    preproc_selector = Pipeline([
-        ('preprocessing', preproc),  # Include the preprocessing steps
-        # GridSearch has shown that keeping 43% of or features maximizes
-        # the model's performance out test set
-        ('feature_selection', SelectPercentile(
-            mutual_info_regression,
-            percentile=43 #
-        ))
-    ])
+    pipes = {}
+    for target in targets:
 
-    model_best =  XGBRegressor(**loaded_params)
+        preproc = Pipeline([
+            ('imputer', KNNImputer(n_neighbors=5)),
+            ('scaler', RobustScaler())
+        ])
 
-    pipe_best = make_pipeline(preproc_selector, model_best)
+        preproc_selector = Pipeline([
+            ('preprocessing', preproc),  # Include the preprocessing steps
+            # GridSearch has shown that keeping 43% of or features maximizes
+            # the model's performance out test set
+            ('feature_selection', SelectPercentile(
+                mutual_info_regression,
+                percentile=43 #
+            ))
+        ])
+        model = XGBRegressor(**all_loaded_params[target])
+        pipes[target] = make_pipeline(preproc_selector, model)
+        print(all_loaded_params[target])
 
-    pipe_best.fit(X_dropped, y_dropped)
+        pipes[target].fit(loaded_data[target][f'X_{target}'], loaded_data[target][f'y_{target}'])
 
-    with open("pipeline.pkl", "wb") as file:
-        pickle.dump(pipe_best, file)
-
-    return pipe_best
+        with open(f"{target}.pkl", "wb") as file:
+            pickle.dump(pipes[target], file)
+    return pipes
 
 #change
 if __name__ == '__main__':

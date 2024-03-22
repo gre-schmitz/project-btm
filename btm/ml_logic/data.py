@@ -3,20 +3,41 @@ import pandas as pd
 from btm.params import *
 from google.cloud import bigquery
 
-def load_data(data_source: str):
+def load_data(data_source: str, target):
     '''
     Loads the csv into a DataFrame
     '''
     df = pd.read_csv(data_source, index_col='Dates', parse_dates=True)
     df.index = pd.to_datetime(df.index)
 
-    # What is the target?
-    Target = 'Final_GDP_Interp'
+
+    target_drop_map = {
+        'SPX Index ': [
+            'Final_GDP_Interp', 'Quarter being forecasted', 'Advance Estimate From BEA',
+            'Publication Date of Advance Estimate', 'Days until advance estimate',
+            'Forecast Error', 'Data releases', 'NDX Index ', 'SPX Index '
+        ],
+        'USDJPY Curncy': [
+            'Quarter being forecasted', 'Advance Estimate From BEA', 'Publication Date of Advance Estimate',
+            'Days until advance estimate', 'Forecast Error', 'Data releases', 'USDJPY Curncy'
+        ],
+        'USOSFR2 Curncy': [
+            'Quarter being forecasted', 'Advance Estimate From BEA', 'Publication Date of Advance Estimate',
+            'Days until advance estimate', 'Forecast Error', 'Data releases', 'USOSFR2 Curncy', 'USOSFR10 Curncy'
+        ],
+        'CL1 Comdty': [
+            'Quarter being forecasted', 'Advance Estimate From BEA', 'Publication Date of Advance Estimate',
+            'Days until advance estimate', 'Forecast Error', 'Data releases', 'CL1 Comdty'
+        ],
+        'Final_GDP_Interp': [
+            'GDP Nowcast', 'Final_GDP_Interp', 'Quarter being forecasted', 'Advance Estimate From BEA',
+            'Publication Date of Advance Estimate', 'Days until advance estimate',
+            'Forecast Error', 'Data releases'
+        ]
+    }
 
     # What features will be dropped in the first place?
-    Drop = ['GDP Nowcast', 'Final_GDP_Interp', 'Quarter being forecasted',
-            'Advance Estimate From BEA', 'Publication Date of Advance Estimate',
-            'Days until advance estimate', 'Forecast Error', 'Data releases']
+    Drop = target_drop_map[target]
 
     # DataFrame will have a lot of empty rows. Lets drop these.
     # However, 2 rows of them sometimes are empty even when the rest is filled
@@ -27,7 +48,7 @@ def load_data(data_source: str):
 
     # Defining our X and y
     X_dropped = df_dropped.drop(columns=Drop)
-    y_dropped = df_dropped[Target]
+    y_dropped = df_dropped[target]
 
     return X_dropped, y_dropped
 
