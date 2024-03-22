@@ -8,6 +8,7 @@ from datetime import datetime
 import pickle
 import os
 
+#change
 app = FastAPI()
 app.state.model = pickle.load(open(os.path.dirname(os.path.dirname(__file__))+'/ml_logic/pipeline.pkl',"rb"))
 
