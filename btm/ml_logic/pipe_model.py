@@ -31,6 +31,7 @@ def pipe(data_source: str):
         if target == 'SPX Index ':
             X = pd.concat([X, with_btm_data_X])
             y = pd.concat([y, with_btm_data_y])
+            print(X)
 
         loaded_data[target] = {
             f"X_{target}": X,

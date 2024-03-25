@@ -7,6 +7,7 @@ from btm.ml_logic.data_predictions import load_data_predictions
 from datetime import datetime
 import pickle
 import os
+from io import BytesIO
 
 #change
 app = FastAPI()
@@ -76,24 +77,32 @@ def predict_spx():
     predictions_life.index = y_dropped.index
 
     df_plot_life = pd.DataFrame()
-    df_plot_life = pd.concat([y_dropped, predictions_life], axis=1)
+    btm_gdp  = X_dropped['Final_GDP_Interp']
+
+    df_plot_life = pd.concat([y_dropped, predictions_life, btm_gdp], axis=1)
     df_plot_life.info()
 
-    df_plot_life['Mkt'] = df_plot_life['SPX Index ']
-    df_plot_life['Mdl'] = df_plot_life[0]
+    df_plot_life['Market'] = df_plot_life['SPX Index ']
+    df_plot_life['BTM Model'] = df_plot_life[0]
     df_plot_life['Diff'] = df_plot_life['SPX Index '] - df_plot_life[0]
     df_plot_life = df_plot_life.drop(columns=['SPX Index ', 0])
     df_plot_life['Diff Z-score'] = (df_plot_life['Diff'] - df_plot_life['Diff'].mean()) / df_plot_life['Diff'].std()
+
     conditions = [
-    (df_plot_life['Diff Z-score'].abs() > 2),
-    ((df_plot_life['Diff Z-score'].abs() > 1.5) & (df_plot_life['Diff Z-score'].abs() <= 2))
+    (df_plot_life['Diff Z-score'] > 2.5),
+    (df_plot_life['Diff Z-score'] > 1.5),
+    (df_plot_life['Diff Z-score'] < -2.5),
+    (df_plot_life['Diff Z-score'] < -1.5)
     ]
 
-    values = ['Strong Buy', 'Buy']
+    df_plot_life['BTM GDP'] = df_plot_life['Final_GDP_Interp'].fillna(method='ffill')
+    df_plot_life = df_plot_life.drop(df_plot_life.columns[0], axis=1)
+
+    values = ['Strong Sell', 'Sell', 'Strong Buy','Buy']
 
     # Create a new column 'Action' based on conditions and values
-    df_plot_life['Action'] = np.select(conditions, values, default='Nothing')
-
+    df_plot_life['Action'] = np.select(conditions, values, default='Fair Value')
+    print(df_plot_life)
     # Print the updated DataFrame
     print(df_plot_life)
 
