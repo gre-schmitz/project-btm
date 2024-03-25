@@ -6,7 +6,8 @@ COPY btm btm
 COPY requirements_prod.txt requirements.txt
 COPY predict_set.csv predict_set.csv
 COPY train_set.csv train_set.csv
-COPY pipeline.pkl pipeline.pkl
+COPY Final_GDP_Interp.pkl Final_GDP_Interp.pkl
+COPY SPXIndex.pkl SPXIndex.pkl
 COPY setup.py setup.py
 # COPY setup.py setup.py
 # reads the requirements as to check for needed libraries

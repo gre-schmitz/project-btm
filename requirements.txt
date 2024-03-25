@@ -28,5 +28,6 @@ optuna
 fastapi==0.108.0
 pytz
 uvicorn
+streamlit
 
 # prevent bq 3+ db-dtypes package error when running training from bq
