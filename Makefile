@@ -7,7 +7,13 @@ run_api:
 	@uvicorn btm.api.fast:app --reload
 
 streamlit:
-	@streamlit run app.py
+	@streamlit run btm/api/webapp.py
+
+gar_creation_locally:
+	docker build --tag=${GAR_IMAGE}:dev .
+
+gar_run_locally:
+	docker run -e PORT=8000 -p 8000:8000 --env-file .env ${GAR_IMAGE}:dev
 
 gar_creation:
 	gcloud auth configure-docker ${GCP_REGION}-docker.pkg.dev
