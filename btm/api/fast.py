@@ -14,7 +14,7 @@ targets = ['Final_GDP_Interp', 'SPX Index ']
 
 
 app.state.gdp = pickle.load(open('Final_GDP_Interp.pkl',"rb"))
-app.state.spx = pickle.load(open('SPX Index .pkl',"rb"))
+app.state.spx = pickle.load(open('SPXIndex.pkl',"rb"))
 
 
 # Allowing all middleware is optional,
@@ -61,17 +61,67 @@ def predict_gdp():
 def predict_spx():
     #turning our prediction.csv into a DataFrame
     model = app.state.spx
-    X_dropped, y_dropped = load_data_predictions('predict_set.csv','SPX Index ')
+    X_dropped, y_dropped = load_data_predictions('predict_set_w_btm.csv','SPX Index ')
     y_pred = model.predict(X_dropped)
     dict_out = {}
     for i, y in enumerate(y_pred):
         dict_out[X_dropped.index[i].to_pydatetime().strftime('%Y-%m-%d')] = \
             float(y)
 
+
+
+    predictions_life = model.predict(X_dropped)
+
+    predictions_life = pd.Series(predictions_life)
+    predictions_life.index = y_dropped.index
+
+    df_plot_life = pd.DataFrame()
+    df_plot_life = pd.concat([y_dropped, predictions_life], axis=1)
+    df_plot_life.info()
+
+    df_plot_life['Mkt'] = df_plot_life['SPX Index ']
+    df_plot_life['Mdl'] = df_plot_life[0]
+    df_plot_life['Diff'] = df_plot_life['SPX Index '] - df_plot_life[0]
+    df_plot_life = df_plot_life.drop(columns=['SPX Index ', 0])
+    df_plot_life['Diff Z-score'] = (df_plot_life['Diff'] - df_plot_life['Diff'].mean()) / df_plot_life['Diff'].std()
+    conditions = [
+    (df_plot_life['Diff Z-score'].abs() > 2),
+    ((df_plot_life['Diff Z-score'].abs() > 1.5) & (df_plot_life['Diff Z-score'].abs() <= 2))
+    ]
+
+    values = ['Strong Buy', 'Buy']
+
+    # Create a new column 'Action' based on conditions and values
+    df_plot_life['Action'] = np.select(conditions, values, default='Nothing')
+
+    # Print the updated DataFrame
+    print(df_plot_life)
+
+
     all_predictions = {
         'title' :'SPX Index Predictions',
-        'predictions' : dict_out
+        'df' : df_plot_life.to_dict()
     }
+
+
+
+
+
+    """ model = app.state.spx
+    X_dropped, y_dropped = load_data_predictions('predict_set_w_btm.csv', 'SPX Index ')
+    y_pred = model.predict(X_dropped)
+
+    # Get the last datetime and prediction
+    last_index = X_dropped.index[-1].to_pydatetime().strftime('%Y-%m-%d')
+    last_prediction = float(y_pred[-1])
+
+    # Create the dictionary with only the last datetime and prediction
+    dict_out = {last_index: last_prediction}
+
+    all_predictions = {
+        'title': 'SPX Index Predictions',
+        'predictions': dict_out
+    } """
 
 
 
