@@ -6,6 +6,9 @@ install_requirements:
 run_api:
 	@uvicorn btm.api.fast:app --reload
 
+streamlit:
+	@streamlit run app.py
+
 gar_creation:
 	gcloud auth configure-docker ${GCP_REGION}-docker.pkg.dev
 	gcloud artifacts repositories create ${GAR_REPO} --repository-format=docker \
