@@ -13,7 +13,7 @@ def load_data(data_source: str, target):
 
     target_drop_map = {
         'SPX Index ': [
-            'Final_GDP_Interp', 'Quarter being forecasted', 'Advance Estimate From BEA',
+            'Quarter being forecasted', 'Advance Estimate From BEA',
             'Publication Date of Advance Estimate', 'Days until advance estimate',
             'Forecast Error', 'Data releases', 'NDX Index ', 'SPX Index '
         ],

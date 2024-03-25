@@ -12,11 +12,9 @@ def load_data_predictions(data_source: str, target):
 
 
     target_drop_map = {
-        'SPX Index ': [
-            'Final_GDP_Interp', 'Quarter being forecasted', 'Advance Estimate From BEA',
-            'Publication Date of Advance Estimate', 'Days until advance estimate',
-            'Forecast Error', 'Data releases', 'NDX Index ', 'SPX Index '
-        ],
+        'SPX Index ': ['Quarter being forecasted', 'Advance Estimate From BEA',
+        'Publication Date of Advance Estimate','Days until advance estimate', 'Forecast Error', 'Data releases', 'NDX Index ', 'SPX Index '],
+
         'USDJPY Curncy': [
             'Quarter being forecasted', 'Advance Estimate From BEA', 'Publication Date of Advance Estimate',
             'Days until advance estimate', 'Forecast Error', 'Data releases', 'USDJPY Curncy'
@@ -35,6 +33,8 @@ def load_data_predictions(data_source: str, target):
             'Forecast Error', 'Data releases'
         ]
     }
+
+
 
     # What features will be dropped in the first place?
     Drop = target_drop_map[target]
