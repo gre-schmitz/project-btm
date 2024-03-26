@@ -3,8 +3,6 @@ import requests
 import pandas as pd
 from PIL import Image
 
-
-
 "# BTM #"
 "__Come to the Data Science side of trading and try to **b**eat **t**he **m**arket with us!__"
 
@@ -29,12 +27,12 @@ model and were granted promising results!"""
 image_gdp_actual_predicted = Image.open('images/GDP_actual_vs_predicted.png')
 st.image(image_gdp_actual_predicted, caption='Interpolated Actual vs predicted', use_column_width=True)
 
-"""We have lineally interpolated the GDP between two official announces and have trained
+"""We have lineally interpolated the GDP between two official announcements and then trained
 our model to predict these using more than 60 features!"""
 
 """Please note, that our model only works around a quarter ahead from today.
 If you want to predict within that range, however, we believe we have a powerful
-predictor regarding the GDP!"""
+predictor regarding the GDP in real time!"""
 
 "## Predicting the S&P 500 using our real time GDP ##"
 
@@ -46,15 +44,15 @@ flowchart = Image.open('images/flowchart.png')
 st.image(flowchart, caption='Basic idea of our webapp', use_column_width=True)
 
 """Again we have used a Machine Learning Model to find the connection of each
-feature in our data set (interpolated real time GDP included) to the S&P"""
+feature in our data set to the S&P"""
 
 """Our backwardly directed training gave our model a pretty good idea:"""
 
 sp_backwards = Image.open('images/sp_backward.png')
 st.image(sp_backwards, caption='Training our S&P model', use_column_width=True)
 
-"""Making predictions for the ongoing quarter look promising (remember we do not
-have official GDPs yet)"""
+"""Making predictions for the current quarter looks promising (remember we do not
+have official GDPs yet, just our live prediction)"""
 
 sp_forward = Image.open('images/sp_forward.png')
 st.image(sp_forward, caption="Our S&P model's performance", use_column_width=True)
