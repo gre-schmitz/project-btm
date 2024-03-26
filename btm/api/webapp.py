@@ -2,6 +2,8 @@ import streamlit as st
 import requests
 import pandas as pd
 from PIL import Image
+import pickle
+import shap
 
 "# BTM #"
 "__Come to the Data Science side of trading and try to **b**eat **t**he **m**arket with us!__"
@@ -73,6 +75,8 @@ response_spx = requests.get(url_spx).json()
 
 "Ready to get your hands dirty? Let's see today's signals!"
 
+
+
 #get!!!
 # df = get_dataframe_data()
 if st.button('get latest computations'):
@@ -111,4 +115,24 @@ if st.button('get latest computations'):
         '> "You can\'t start a fire without a little spark"\t\n\nBruce Springsteen'
     elif list(response_spx['df']["Action"].values())[-1] == 'Strong Buy':
         "#### S&P seems *under*valued. Consider going long your S&P exposure... 📈 ####"
-        '> "You can\'t start a fire without a little spark"\t\n\nBruce Springsteen'
+        '> "\'Cos opportunity comes once in a lifetime"\t\n\nBruce Springsteen'
+
+
+#############################################################################
+### waterfall ###############################################################
+#############################################################################
+Target = 'SPX Index '
+Drop = ['Quarter being forecasted', 'Advance Estimate From BEA',
+        'Publication Date of Advance Estimate','Days until advance estimate',
+        'Forecast Error', 'Data releases', 'NDX Index ', 'SPX Index ']
+
+test = pd.read_csv('predict_set_w_btm.csv', index_col='Dates', parse_dates=True) #date_parser=dateparse)
+X_test = test.drop(columns=Drop)
+y_test = test[Target]
+
+model = pickle.load(open('spx_final_pickle.pkl',"rb"))
+
+explainer = shap.Explainer(model.predict, X_test)
+shap_values = explainer(X_test)
+st.set_option('deprecation.showPyplotGlobalUse', False)
+st.pyplot(shap.plots.waterfall(shap_values[0]))
