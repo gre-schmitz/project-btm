@@ -149,7 +149,7 @@ if st.button('get latest computations'):
     # print is visible in the server output, not in the page
     #print('button clicked!')
     "##### Our prediction's main drivers #####"
-    st.pyplot(shap.plots.waterfall(shap_values[0]))
+    st.pyplot(shap.plots.waterfall(shap_values[-1]))
 
     """**Explanation:** The listed features from above tell you wether they have driven
     the S&P's fair value up (red arrows) or down (blue arrows) compared to last year's
