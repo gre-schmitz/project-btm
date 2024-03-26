@@ -9,6 +9,9 @@ run_api:
 streamlit:
 	@streamlit run btm/api/webapp.py
 
+streamlit_local:
+	@streamlit run btm/api/webapp_local.py
+
 gar_creation_locally:
 	docker build --tag=${GAR_IMAGE}:dev .
 

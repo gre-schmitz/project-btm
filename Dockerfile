@@ -5,10 +5,10 @@ WORKDIR /prod
 COPY btm btm
 COPY images images
 COPY requirements_prod.txt requirements.txt
-COPY predict_set.csv predict_set.csv
+# COPY predict_set.csv predict_set.csv
 COPY total_df_w_btm.csv total_df_w_btm.csv
 # COPY train_set.csv train_set.csv
-COPY predict_set_w_btm.csv predict_set_w_btm.csv
+# COPY predict_set_w_btm.csv predict_set_w_btm.csv
 COPY Final_GDP_Interp.pkl Final_GDP_Interp.pkl
 COPY spx_final_pickle.pkl spx_final_pickle.pkl
 COPY setup.py setup.py
