@@ -7,7 +7,7 @@ run_api:
 	@uvicorn btm.api.fast:app --reload
 
 streamlit:
-	@streamlit run btm/api/webapp_local.py
+	@streamlit run btm/api/webapp.py
 
 gar_creation_locally:
 	docker build --tag=${GAR_IMAGE}:dev .
