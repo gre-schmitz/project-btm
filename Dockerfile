@@ -8,7 +8,7 @@ COPY predict_set.csv predict_set.csv
 COPY train_set.csv train_set.csv
 COPY predict_set_w_btm.csv predict_set_w_btm.csv
 COPY Final_GDP_Interp.pkl Final_GDP_Interp.pkl
-COPY SPXIndex.pkl SPXIndex.pkl
+COPY spx_final_pickle.pkl spx_final_pickle.pkl
 COPY setup.py setup.py
 # COPY setup.py setup.py
 # reads the requirements as to check for needed libraries

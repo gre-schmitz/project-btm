@@ -3,6 +3,8 @@ import requests
 import pandas as pd
 from PIL import Image
 
+
+
 "# BTM #"
 "__Come to the Data Science side of trading and try to **b**eat **t**he **m**arket with us!__"
 
@@ -108,18 +110,30 @@ if st.button('get latest computations'):
             round(list(response_gdp['predictions'].values())[-1] - \
                 list(response_gdp['predictions'].values())[-2],2))
     col2.metric('S&P 500 index',
-            list(response_spx['df']['Mkt'].values())[-1],
-            list(response_spx['df']['Mkt'].values())[-1] - \
-                list(response_spx['df']['Mkt'].values())[-2])
+            list(response_spx['df']['Market'].values())[-1],
+            list(response_spx['df']['Market'].values())[-1] - \
+                list(response_spx['df']['Market'].values())[-2])
     col3.metric("S&P Fair Value",
-            round(list(response_spx['df']['Mdl'].values())[-1], 2),
-            round(list(response_spx['df']['Mdl'].values())[-1] - \
-                list(response_spx['df']['Mdl'].values())[-2],2))
+            round(list(response_spx['df']['BTM Model'].values())[-1], 2),
+            round(list(response_spx['df']['BTM Model'].values())[-1] - \
+                list(response_spx['df']['BTM Model'].values())[-2],2))
 
     # Now come the implications
     ""
-    "Based on our calculations above we provide the following signal"
+    f"Based on our calculations from {list(response_gdp['predictions'].keys())[-1]} we provide the following signal"
 
-    if list(response_spx['df']["Action"].values())[-1] == 'Nothing':
+    if list(response_spx['df']["Action"].values())[-1] == 'Fair Value':
         "#### Hold tight and do nothing 🤷‍♂️ ####"
         '> "Make a few great investments and just sit on your ass"\t\n\nCharlie Munger'
+    elif list(response_spx['df']["Action"].values())[-1] == 'Strong Sell':
+        "#### S&P seems *over*valued. Consider reducing your S&P exposure... 📉####"
+        '> "Time to say good bye"\t\n\nAndrea Bocelli'
+    elif list(response_spx['df']["Action"].values())[-1] == 'Sell':
+        "#### S&P seems slightly *over*valued. Consider reducing your S&P exposure moderately... 🤔####"
+        '> "Don\'t cry because it\'s over, smile because it happened."\t\n\nDr Seuss'
+    elif list(response_spx['df']["Action"].values())[-1] == 'Buy':
+        "#### S&P seems slightly *under*valued. Consider going moderately long your S&P exposure... 🤔####"
+        '> "You can\'t start a fire without a little spark"\t\n\nBruce Springsteen'
+    elif list(response_spx['df']["Action"].values())[-1] == 'Strong Buy':
+        "#### S&P seems *under*valued. Consider going long your S&P exposure... 📈####"
+        '> "You can\'t start a fire without a little spark"\t\n\nBruce Springsteen'
