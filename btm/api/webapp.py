@@ -95,7 +95,7 @@ if st.button('get latest computations'):
 
     # Now come the implications
     ""
-    f"Based on our calculations from {list(response_spx['df']['BTM GDP'].keys())[-1][:11]} we provide the following signal"
+    f"Based on our calculations from {list(response_spx['df']['BTM GDP'].keys())[-1][:10]} we provide the following signal"
 
     if list(response_spx['df']["Action"].values())[-1] == 'Fair Value':
         "#### Hold tight and do nothing 🤷‍♂️ ####"
