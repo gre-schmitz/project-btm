@@ -25,9 +25,10 @@ second!"""
 
 """We went searching for the best data sources, ran them through our Machine Learning
 model and produced promising results!"""
-
+""
+"##### Interpolated Actual vs predicted #####"
 image_gdp_actual_predicted = Image.open('images/GDP_actual_vs_predicted.png')
-st.image(image_gdp_actual_predicted, caption='Interpolated Actual vs predicted', use_column_width=True)
+st.image(image_gdp_actual_predicted, use_column_width=True)
 
 """We have lineally interpolated the GDP between two official announcements and then trained
 our model to predict these using more than 60 features!"""
@@ -41,23 +42,26 @@ predictor regarding the GDP in real time!"""
 """Having a predictor for the real time GDP.. why don't we use it on the stock
 market? Our idea is to calculate **fair values** for today's S&P and other
 financial figures to help us find investing strategies."""
-
+""
+"##### Basic idea of our webapp #####"
 flowchart = Image.open('images/flowchart.png')
-st.image(flowchart, caption='Basic idea of our webapp', use_column_width=True)
+st.image(flowchart, use_column_width=True)
 
 """Again we have used a Machine Learning Model to find the connection of each
 feature in our data set to the S&P"""
 
 """Our backwardly directed training gave our model a pretty good idea:"""
-
+""
+"##### Training our S&P model #####"
 sp_backwards = Image.open('images/sp_backward.png')
-st.image(sp_backwards, caption='Training our S&P model', use_column_width=True)
+st.image(sp_backwards, use_column_width=True)
 
 """Making predictions for the current quarter looks promising (remember we do not
 have official GDPs yet, just our live prediction)"""
-
+""
+"##### Our S&P model's recent performance #####"
 sp_forward = Image.open('images/sp_forward.png')
-st.image(sp_forward, caption="Our S&P model's performance", use_column_width=True)
+st.image(sp_forward, use_column_width=True)
 
 """What can we conclude now from this? We believe that our model's *predicted*
 values for the S&P 500 can serve as a *fair value* of the S&P! If our model
@@ -74,8 +78,26 @@ response_spx = requests.get(url_spx).json()
 "## Calculate fair values ##"
 
 "Ready to get your hands dirty? Let's see today's signals!"
+""
+"(This might take a minute, things are actually being calculated...)"
 
+#############################################################################
+### waterfall ###############################################################
+#############################################################################
+Target = 'SPX Index '
+Drop = ['Quarter being forecasted', 'Advance Estimate From BEA',
+        'Publication Date of Advance Estimate','Days until advance estimate',
+        'Forecast Error', 'Data releases', 'NDX Index ', 'SPX Index ']
 
+test = pd.read_csv('predict_set_w_btm.csv', index_col='Dates', parse_dates=True) #date_parser=dateparse)
+X_test = test.drop(columns=Drop)
+y_test = test[Target]
+
+model = pickle.load(open('spx_final_pickle.pkl',"rb"))
+
+explainer = shap.Explainer(model.predict, X_test)
+shap_values = explainer(X_test)
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 #get!!!
 # df = get_dataframe_data()
@@ -118,21 +140,17 @@ if st.button('get latest computations'):
         '> "\'Cos opportunity comes once in a lifetime"\t\n\nBruce Springsteen'
 
 
-#############################################################################
-### waterfall ###############################################################
-#############################################################################
-Target = 'SPX Index '
-Drop = ['Quarter being forecasted', 'Advance Estimate From BEA',
-        'Publication Date of Advance Estimate','Days until advance estimate',
-        'Forecast Error', 'Data releases', 'NDX Index ', 'SPX Index ']
+    "## What is driving our predictions? ##"
 
-test = pd.read_csv('predict_set_w_btm.csv', index_col='Dates', parse_dates=True) #date_parser=dateparse)
-X_test = test.drop(columns=Drop)
-y_test = test[Target]
+    """It can be spooky to be told stories by Machine Learning algorithms. Let us
+    explain what is driving our predictions"""
+    ""
+#if st.button('find out about our drivers'):
+    # print is visible in the server output, not in the page
+    #print('button clicked!')
+    "##### Our prediction's main drivers #####"
+    st.pyplot(shap.plots.waterfall(shap_values[0]))
 
-model = pickle.load(open('spx_final_pickle.pkl',"rb"))
-
-explainer = shap.Explainer(model.predict, X_test)
-shap_values = explainer(X_test)
-st.set_option('deprecation.showPyplotGlobalUse', False)
-st.pyplot(shap.plots.waterfall(shap_values[0]))
+    """**Explanation:** The listed features from above tell you wether they have driven
+    the S&P's fair value up (red arrows) or down (blue arrows) compared to last year's
+    average value of the actual S&P"""
