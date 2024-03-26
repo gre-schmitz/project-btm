@@ -63,8 +63,8 @@ is calculating a *lower* value than the actual price of the S&P, this is a buy
 signal and vice versa! And also, if they are sufficiently alike... it is time
 to grab a cold drink and do nothing."""
 
-url_spx = 'http://localhost:8000/latest_spx_predictions'
-url_gdp = 'http://localhost:8000/latest_gdp_predictions'
+url_spx = 'https://btm-4yiq46myaq-ew.a.run.app/latest_spx_predictions'
+url_gdp = 'https://btm-4yiq46myaq-ew.a.run.app/latest_gdp_predictions'
 
 response_spx = requests.get(url_spx).json()
 response_gdp = requests.get(url_gdp).json()
