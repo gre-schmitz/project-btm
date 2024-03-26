@@ -15,7 +15,7 @@ targets = ['Final_GDP_Interp', 'SPX Index ']
 
 
 app.state.gdp = pickle.load(open('Final_GDP_Interp.pkl',"rb"))
-app.state.spx = pickle.load(open('SPXIndex.pkl',"rb"))
+app.state.spx = pickle.load(open('spx_final_pickle.pkl',"rb"))
 
 
 # Allowing all middleware is optional,
