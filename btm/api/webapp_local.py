@@ -21,8 +21,8 @@ second!"""
 ""
 """It would. But no one can. *However:* We might be close!"""
 
-"""We went tapping some data sources, ran them through our Machine Learning
-model and were granted promising results!"""
+"""We went searching for the best data sources, ran them through our Machine Learning
+model and produced promising results!"""
 
 image_gdp_actual_predicted = Image.open('images/GDP_actual_vs_predicted.png')
 st.image(image_gdp_actual_predicted, caption='Interpolated Actual vs predicted', use_column_width=True)
@@ -38,7 +38,7 @@ predictor regarding the GDP in real time!"""
 
 """Having a predictor for the real time GDP.. why don't we use it on the stock
 market? Our idea is to calculate **fair values** for today's S&P and other
-financial figures to help us find investing strategies"""
+financial figures to help us find investing strategies."""
 
 flowchart = Image.open('images/flowchart.png')
 st.image(flowchart, caption='Basic idea of our webapp', use_column_width=True)

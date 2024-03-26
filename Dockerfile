@@ -3,6 +3,7 @@ FROM python:3.10.6-buster
 WORKDIR /prod
 
 COPY btm btm
+COPY images images
 COPY requirements_prod.txt requirements.txt
 COPY predict_set.csv predict_set.csv
 COPY train_set.csv train_set.csv
