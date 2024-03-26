@@ -153,4 +153,4 @@ if st.button('get latest computations'):
 
     """**Explanation:** The listed features from above tell you wether they have driven
     the S&P's fair value up (red arrows) or down (blue arrows) compared to last year's
-    average value of the actual S&P"""
+    average value of the actual S&P."""
