@@ -62,7 +62,7 @@ def predict_gdp():
 def predict_spx():
     #turning our prediction.csv into a DataFrame
     model = app.state.spx
-    X_dropped, y_dropped = load_data_predictions('predict_set_w_btm.csv','SPX Index ')
+    X_dropped, y_dropped = load_data_predictions('total_df_w_btm.csv','SPX Index ')
     y_pred = model.predict(X_dropped)
     dict_out = {}
     for i, y in enumerate(y_pred):
