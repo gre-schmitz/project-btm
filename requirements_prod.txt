@@ -1,6 +1,6 @@
--f https://download.pytorch.org/whl/torch_stable.html
-torch==2.2.0+cpu
-darts
+# -f https://download.pytorch.org/whl/torch_stable.html
+# torch==2.2.0+cpu
+# darts
 wheel
 ipykernel
 yapf
@@ -20,7 +20,7 @@ pyarrow
 # tensorflow==2.10.0; sys_platform != 'darwin' # Windows & Ubuntu Intel chips
 xgboost
 # statsmodels
-shap
+shap==0.42.1
 # darts
 # optuna
 
