@@ -6,11 +6,14 @@ install_requirements:
 run_api:
 	@uvicorn btm.api.fast:app --reload
 
+run_api_alternative:
+	@uvicorn btm.api.fast_images:app --reload
+
 streamlit:
 	@streamlit run btm/api/webapp.py
 
 streamlit_local:
-	@streamlit run btm/api/webapp_local.py
+	@streamlit run btm/api/Home.py
 
 gar_creation_locally:
 	docker build --tag=${GAR_IMAGE}:dev .
