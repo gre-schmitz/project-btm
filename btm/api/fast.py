@@ -113,26 +113,20 @@ def predict_spx():
     }
 
 
-
-
-
-    """ model = app.state.spx
-    X_dropped, y_dropped = load_data_predictions('predict_set_w_btm.csv', 'SPX Index ')
-    y_pred = model.predict(X_dropped)
-
-    # Get the last datetime and prediction
-    last_index = X_dropped.index[-1].to_pydatetime().strftime('%Y-%m-%d')
-    last_prediction = float(y_pred[-1])
-
-    # Create the dictionary with only the last datetime and prediction
-    dict_out = {last_index: last_prediction}
-
-    all_predictions = {
-        'title': 'SPX Index Predictions',
-        'predictions': dict_out
-    } """
-
-
-
-
     return all_predictions
+
+@app.get("/prediction_set")
+def predict_set():
+    Target = 'SPX Index '
+    Drop = ['Quarter being forecasted', 'Advance Estimate From BEA',
+            'Publication Date of Advance Estimate','Days until advance estimate',
+            'Forecast Error', 'Data releases', 'NDX Index ', 'SPX Index ']
+
+    test = pd.read_csv('predict_set_w_btm.csv', index_col='Dates', parse_dates=True) #date_parser=dateparse)
+    X_test = test.drop(columns=Drop)
+    # y_test = test[Target]
+
+    prediction_set = {'title': 'prediction set for current quarter',
+                      'df': X_test.to_dict()}
+
+    return prediction_set
