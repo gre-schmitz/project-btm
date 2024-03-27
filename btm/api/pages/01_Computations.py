@@ -110,7 +110,7 @@ if st.button('get latest computations'):
     "##### Our prediction's main drivers: #####"
     st.markdown('<hr>', unsafe_allow_html=True)
 
-    url = 'http://localhost:8000/download_picture'
+    url = 'https://btm-final-4yiq46myaq-ew.a.run.app/download_picture'
     response = requests.get(url)
 
     st.image(response.content)
