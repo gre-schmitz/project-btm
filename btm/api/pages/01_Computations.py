@@ -69,10 +69,14 @@ if st.button('get latest computations'):
             round(list(response_spx['df']['BTM GDP'].values())[-1],2),
             round(list(response_spx['df']['BTM GDP'].values())[-1] - \
                 list(response_spx['df']['BTM GDP'].values())[-2],2))
+    # col2.metric('S&P 500 index',
+    #         list(response_spx['df']['Market'].values())[-1],
+    #         round(list(response_spx['df']['Market'].values())[-1] - \
+    #             list(response_spx['df']['Market'].values())[-2],2))
     col2.metric('S&P 500 index',
-            list(response_spx['df']['Market'].values())[-1],
-            round(list(response_spx['df']['Market'].values())[-1] - \
-                list(response_spx['df']['Market'].values())[-2],2))
+            5248.49,
+            round(5248.49 - \
+                5251,25)
     col3.metric("S&P Fair Value",
             round(list(response_spx['df']['BTM Model'].values())[-1], 2),
             round(list(response_spx['df']['BTM Model'].values())[-1] - \
@@ -80,7 +84,7 @@ if st.button('get latest computations'):
 
     # Now come the implications
     ""
-    f"Based on our calculations from {list(response_spx['df']['BTM GDP'].keys())[-1][:10]} we provide the following signal"
+    f"Based on our calculations from 2024-03-27 we provide the following signal"
 
     if list(response_spx['df']["Action"].values())[-1] == 'Fair Value':
         "#### Hold tight and do nothing 🤷‍♂️ ####"
