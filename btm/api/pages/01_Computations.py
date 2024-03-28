@@ -76,7 +76,7 @@ if st.button('get latest computations'):
     col2.metric('S&P 500 index',
             5248.49,
             round(5248.49 - \
-                5251,25))
+                5251.25, 2))
     col3.metric("S&P Fair Value",
             round(list(response_spx['df']['BTM Model'].values())[-1], 2),
             round(list(response_spx['df']['BTM Model'].values())[-1] - \
