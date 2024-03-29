@@ -16,7 +16,7 @@ st.markdown("# __Beat the Market__ #")
 st.markdown("[Go to computations](Computations)")
 st.markdown("[Find out about or methods](Background)")
 
-"### Disclaimer###"
+"### Disclaimer ###"
 """
 This application is intended for informational and educational purposes only. The fair values provided for the S&P 500 are based on certain algorithms and methodologies which may not accurately predict market movements or future stock prices. The information provided by this application should not be considered as financial advice or a recommendation to buy, sell, or hold any securities.
 """
