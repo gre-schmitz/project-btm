@@ -1,7 +1,20 @@
 # project-btm
 Le Wagon Project Beat the Market
 
-Data Sources:
+**DISCLAIMER**: We have created this repo as a graduation project for the _Le Wagon Data Science & AI_ bootcamp without any commercial purpose. That is why we have not updated the data input lately. The latest calculations are from late March 2024.
+
+## Project description
+The idea is to predict a GDP growth in real time (that is on a daily basis) rather than waiting for the official GDPs being announced once a quarter. The GDP is a powerful feature when predicting a lot of economic indices, such as the S&P 500. Thus, the repo provides two pickle files:
+
+- an XGBoost model + pipeline to predict the GDP growth in real time
+- another model to predict the S&P 500
+
+Our S&P 500 model is trained with interpolated GDP-growth rates: Between two GDP announcements, for every day we linearly interpolated the growth rates between two announcements. This interpolated growth was used as a feature to train our XGBoost S&P-model. For the _current_ quarter we are using growth rates from our GDP-prediction model. We believe like that we have created a Fair Value Calculator. Why do we believe that? The difference of the actual and predicted S&P values are _mean reverting_. Hence, the values of our predictor and the actual S&P 500 have the strong tendency to follow each other.
+
+We have created a Dockerfile, containing the our data and pickle files. It runs an API that we have deployed via GCP. You can get your latest Fair Values on [Beat the Market](https://project-btm-front.streamlit.app/).
+
+
+## Data Sources:
 GDP Now [https://www.atlantafed.org/cqer/research/gdpnow#Tab2]
 The GDPNow forecast model provided by the Federal Reserve Bank of Atlanta estimates the real gross domestic product (GDP) growth in the United States for the current quarter. The GDPNow model estimate is on a quarter-over-quarter basis, meaning it forecasts the percentage change in GDP from the previous quarter to the current quarter on an annualized basis.
 
